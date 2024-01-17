@@ -12,12 +12,31 @@ the function below should be the only one in this file.
 
 #include "split.h"
 
-/* Add a prototype for a helper function here if you need */
-
 void split(Node*& in, Node*& odds, Node*& evens)
 {
-  /* Add code here */
-// WRITE YOUR CODE HERE
-}
+  if (in == nullptr) return;
+  int value = in->value;
 
-/* If you needed a helper function, write it here */
+  if (value % 2 == 0) {
+    if (evens == nullptr) {
+      evens = new Node(value, nullptr);
+      split(in->next, odds, evens);
+    }
+    else {
+      evens->next = new Node(value, nullptr);
+      split(in->next, odds, evens->next);
+    }
+  } else {
+    if (odds == nullptr) {
+      odds = new Node(value, nullptr);
+      split(in->next, odds, evens);
+    }
+    else {
+      odds->next = new Node(value, nullptr);
+      split(in->next, odds->next, evens);
+    }
+  }
+
+  delete in;
+  in = nullptr;
+}
